@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var currentTime = Date()
+    @State private var counter = 0
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            EquatableView(content: ChildView(counter: $counter))
+            Text("Current time: \(currentTime)")
+                .padding()
+            Button("Increment Counter") {
+                counter += 1
+            }
         }
-        .padding()
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+                currentTime = Date()
+            }
+        }
     }
 }
 
